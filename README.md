@@ -28,6 +28,10 @@ The trained model will be saved in the `checkpoints/` folder as a `.zip` file.
 python learning.py (--bump)
 ```
 
+### Hyperparameters
+
+You can modify hyperparameters for PPO in `learning.py` under `policy_kwargs` (Refer to the Stable-Baselines3 PPO documentation (https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html) for available options).
+
 ## Rendering
 
 Simulate the trained model.
@@ -46,20 +50,11 @@ Training logs are saved in the `logs/` directory. You can visualize them with Te
 tensorboard --logdir=logs
 ```
 
-## Hyperparameter Tuning
-
-You can modify hyperparameters for PPO in `learning.py` under `policy_kwargs`.
-
-Refer to the Stable-Baselines3 PPO documentation for available options:  
-https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html
-
 ## Environment 
 
-### Obstacle Information
+### Obstacle Information (Bump Environment)
 
 ![Simulation with bumps](./asset/obstacle.png)
-
-## Bumps Configuration
 
 The environment includes several bump obstacles defined in the XML. Their positions and sizes are listed below:
 
@@ -79,8 +74,8 @@ The environment includes several bump obstacles defined in the XML. Their positi
 
 You can customize the Observation, Reward, and Termination Condition in `custom_walker2d.py`.  We recommend modifying the sections marked with `TODO`.
 
-Note: Do not modify the XML file path or environment parameters in `__init__`.  
-Test will be based on the default environment setup.
+Note: Do not modify the XML file path or environment parameters in `__init__`. Test will be based on the default environment setup.
+
 
 ## Reference
 
