@@ -1,3 +1,4 @@
+import numpy as np
 import gymnasium as gym
 import os
 
@@ -34,7 +35,7 @@ import os
 # | 5   | Torque applied on the left foot rotor  | -1          | 1           | foot_left_joint                  | hinge | torque (N m) |
 
 class CustomEnvWrapper(gym.Wrapper):
-    def __init__(self, render_mode="human", bumps=False):
+    def __init__(self, render_mode="human", bumps=False, use_tar_vel=False):
         if bumps:
             env = gym.make(
                 "Walker2d-v5",
@@ -49,10 +50,21 @@ class CustomEnvWrapper(gym.Wrapper):
                 render_mode=render_mode,
                 exclude_current_positions_from_observation=False,
                 frame_skip = 10)
+            
+        # For 1-2
+        self.use_tar_vel = use_tar_vel
+        self.tar_vel = np.array([0.0,0.0]) # x, z
+        if self.use_tar_vel:
+            self.set_target_x_velocity(np.random.uniform(1.0,5.0))
         super().__init__(env)
+        
+    def set_target_x_velocity(self, tar_vel):
+        self.tar_vel[0] = tar_vel
 
     def reset(self, **kwargs):
         obs, info = self.env.reset(**kwargs)
+        if self.use_tar_vel:
+            self.set_target_x_velocity(np.random.uniform(1.0,5.0))
         custom_obs = self.custom_observation(obs)
         return custom_obs, info
 
@@ -74,6 +86,7 @@ class CustomEnvWrapper(gym.Wrapper):
 
     def custom_observation(self, obs):
         # TODO: Implement your own observation
+        # TODO: Include the target velocity in the observation
         return obs
 
     def custom_reward(self, obs, original_reward):

@@ -3,7 +3,7 @@ from stable_baselines3.common.vec_env import SubprocVecEnv, VecMonitor
 from custom_walker2d import CustomEnvWrapper
 from stable_baselines3.common.callbacks import CheckpointCallback
 
-N_ENVS = 16
+N_ENVS = 4
 
 def make_env(bumps = False):
     def _init():
@@ -24,7 +24,8 @@ checkpoint_callback = CheckpointCallback(
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument("--bump", action="store_true", help="Enable bumping")
+parser.add_argument("--vel", action="store_true", help="Enable bumping") # For 1-2
+parser.add_argument("--bump", action="store_true", help="Enable bumping") # For Extra
 
 args = parser.parse_args()
 if __name__ == "__main__":
