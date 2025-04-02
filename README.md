@@ -26,7 +26,7 @@ The trained model will be saved in the `checkpoints/` folder as a `.zip` file.
 ```bash
 # Add --vel to train with a target velocity (for 1-2)
 # Add --bump to train with bump terrain (for extra)
-python learning.py (--bump)
+python learning.py (--bump) (--vel)
 ```
 
 ### Hyperparameters
@@ -41,7 +41,7 @@ Simulate the trained model.
 # --vel: train with a target velocity (for 1-2)
 # --bump: simulate on bump terrain (for extra)
 # --model: path to the trained model
-python rendering.py --model {model_path} (--bump)
+python rendering.py --model {model_path} (--bump) (--vel)
 ```
 
 ## Logging

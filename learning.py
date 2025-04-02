@@ -5,9 +5,9 @@ from stable_baselines3.common.callbacks import CheckpointCallback
 
 N_ENVS = 4
 
-def make_env(bumps = False):
+def make_env(bumps = False, use_tar_vel=False):
     def _init():
-        env = CustomEnvWrapper(render_mode=None, bumps=bumps)
+        env = CustomEnvWrapper(render_mode=None, bumps=bumps, use_tar_vel=use_tar_vel)
         return env
     return _init
 
@@ -30,7 +30,7 @@ parser.add_argument("--bump", action="store_true", help="Enable bumping") # For 
 args = parser.parse_args()
 if __name__ == "__main__":
     num_cpu = N_ENVS
-    env = SubprocVecEnv([make_env(bumps = args.bump) for _ in range(num_cpu)])
+    env = SubprocVecEnv([make_env(bumps = args.bump, use_tar_vel=args.vel) for _ in range(num_cpu)])
     env = VecMonitor(env)
     model = PPO("MlpPolicy", env, verbose=1, tensorboard_log="./logs/", policy_kwargs=policy_kwargs, device="cpu", learning_rate=0.0001)
     model.learn(total_timesteps=10000000000, callback=checkpoint_callback)

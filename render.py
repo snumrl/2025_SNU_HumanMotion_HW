@@ -11,7 +11,7 @@ parser.add_argument("--bump", action="store_true", help="Enable bumping") # For 
 
 args = parser.parse_args()
 
-env = CustomEnvWrapper(render_mode="human", bumps=args.bump)
+env = CustomEnvWrapper(render_mode="human", bumps=args.bump, use_tar_vel=args.vel)
 model = PPO.load(args.model) if args.model is not None else None
 obs, _ = env.reset()
 
