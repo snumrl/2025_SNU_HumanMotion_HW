@@ -58,6 +58,10 @@ class CustomEnvWrapper(gym.Wrapper):
             self.set_target_x_velocity(np.random.uniform(1.0,5.0))
         super().__init__(env)
         
+        ## change observation space according to the new observation
+        obs, _ = self.reset()
+        self.observation_space = gym.spaces.Box(low=-np.inf, high=np.inf, shape=(len(obs),), dtype=np.float64)
+        
     def set_target_x_velocity(self, tar_vel):
         self.tar_vel[0] = tar_vel
 
